@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import type { Student } from '@/common/types/Student'
 import ConfirmModal from './ConfirmModal.vue'
-import StudentForm from './StudentForm.vue'
 
 defineProps<{
   id: number
   name: string
   cpf: string
   email: string
+}>()
+
+defineEmits<{
+  (event: 'delete', id: number): void
+  (event: 'edit', id: number, student: Partial<Student>): void
 }>()
 </script>
 
@@ -30,11 +35,11 @@ defineProps<{
         <dialog :id="'edit_modal_' + id" class="modal">
           <div class="modal-box">
             <h3 class="font-bold text-lg">Edit {{ name }}</h3>
-            <StudentForm />
+            <slot name="form-edit"> </slot>
             <div class="modal-action">
               <form method="dialog">
                 <button class="btn btn-error btn-outline mr-4">Cancel</button>
-                <button class="btn btn-success">Edit</button>
+                <button class="btn btn-success" @click="() => $emit('edit', id, {})">Edit</button>
               </form>
             </div>
           </div>
@@ -45,6 +50,7 @@ defineProps<{
           :header="`Are you sure you want to remove ${name}?`"
           buttonLabel="Remove"
           buttonClass="btn btn-error"
+          @confirm="() => $emit('delete', id)"
         />
       </div>
     </div>
