@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import ConfirmModal from './ConfirmModal.vue'
+import StudentForm from './StudentForm.vue'
+
 defineProps<{
+  id: number
   name: string
   cpf: string
   email: string
@@ -22,8 +26,26 @@ defineProps<{
         {{ email }}
       </p>
       <div class="card-actions justify-end">
-        <button class="btn btn-info">Edit</button>
-        <button class="btn btn-error">Remove</button>
+        <button class="btn btn-info" :onclick="`edit_modal_${id}.showModal()`">Edit</button>
+        <dialog :id="'edit_modal_' + id" class="modal">
+          <div class="modal-box">
+            <h3 class="font-bold text-lg">Edit {{ name }}</h3>
+            <StudentForm />
+            <div class="modal-action">
+              <form method="dialog">
+                <button class="btn btn-error btn-outline mr-4">Cancel</button>
+                <button class="btn btn-success">Edit</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+
+        <ConfirmModal
+          :id="id"
+          :header="`Are you sure you want to remove ${name}?`"
+          buttonLabel="Remove"
+          buttonClass="btn btn-error"
+        />
       </div>
     </div>
   </div>
