@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import StudentForm from './StudentForm.vue'
+</script>
 
 <template>
   <div class="card w-full bg-neutral shadow-xl">
@@ -21,7 +23,24 @@
           <button class="btn btn-primary">Search</button>
         </div>
 
-        <button class="btn btn-success w-full md:w-auto md:ml-4 mt-4 md:mt-0">Add</button>
+        <button
+          class="btn btn-success w-full md:w-auto md:ml-4 mt-4 md:mt-0"
+          onclick="add_modal.showModal()"
+        >
+          Add
+        </button>
+        <dialog id="add_modal" class="modal">
+          <div class="modal-box">
+            <h3 class="font-bold text-lg">Add a new student</h3>
+            <StudentForm />
+            <div class="modal-action">
+              <form method="dialog">
+                <button class="btn btn-error btn-outline mr-4">Cancel</button>
+                <button class="btn btn-success">Add</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </div>
   </div>
