@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import SearchInput from './SearchInput.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="card w-full bg-neutral shadow-xl">
