@@ -1,5 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import StudentCard from './components/StudentCard.vue'
+import MyHeader from './components/MyHeader.vue'
+
+const MOCK_STUDENTS = [
+  { name: 'John Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'John Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'John Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
+  { name: 'John Smith', cpf: '123.456.789-00', email: '123' }
+]
+</script>
 
 <template>
-  <h1 className="text-3xl font-bold underline">Hello world!</h1>
+  <main class="container mx-auto p-4">
+    <MyHeader />
+
+    <section class="grid grid-cols-1 mt-10 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <StudentCard v-for="student in MOCK_STUDENTS" :key="student.name" v-bind="student" />
+    </section>
+  </main>
 </template>
