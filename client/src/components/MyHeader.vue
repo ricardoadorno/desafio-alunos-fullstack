@@ -4,9 +4,14 @@
   <div class="card w-full bg-neutral shadow-xl">
     <div class="card-body">
       <h1 class="text-3xl font-bold underline">Students API</h1>
-      <p class="text-sm text-neutral-content mt-w">
+      <p class="text-md mt-w">
         Here you can see all students registered in the system. You can also add new students, edit
         or delete existing ones.
+      </p>
+
+      <p class="text-sm text-neutral-content mt-w italic">
+        If you want to search for a specific student, you can use the search inputs, otherwise you
+        can see all students by clicking on the search button without filling in any fields.
       </p>
 
       <div class="divider m-0"></div>
