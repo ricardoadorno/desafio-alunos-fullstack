@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance } from 'axios'
 
 const config = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -7,15 +7,26 @@ const config = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers':
       'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,multipart/form-data',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-  },
-};
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
+  }
+}
 
 export default (path: string, headers?: any): AxiosInstance =>
   axios.create({
     ...config,
     baseURL: `${config.baseURL}/${path}`,
     headers: {
-      common: headers,
+      common: headers
     },
-  });
+    paramsSerializer: (params) => {
+      const searchParams = new URLSearchParams()
+
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) {
+          searchParams.append(key, value)
+        }
+      })
+
+      return searchParams.toString()
+    }
+  })
