@@ -4,43 +4,38 @@ import type { GetAllStudentsQueryParams } from './interfaces/GetAllStudentsQuery
 import type { GetStudentResponse } from './interfaces/GetStudentResponse'
 import type { UpdateStudentRequest } from './interfaces/UpdateStudentRequest'
 
-const MOCK_STUDENTS = [
-  { id: 1, name: 'John Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 2, name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 3, name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 4, name: 'John Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 5, name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 6, name: 'Jane Doe', cpf: '123.456.789-00', email: '123' },
-  { id: 7, name: 'John Doe', cpf: '123.456.789-00', email: '123' }
-]
-
 export class StudentService extends ApiService {
   constructor() {
-    super('/students')
+    super('student')
   }
 
   async getById(id: number): Promise<GetStudentResponse> {
-    const response = await this.http.get(`/${id}`)
-    return response.data
+    const { data } = await this.http.get<GetStudentResponse>(`/${id}`)
+
+    return data
   }
 
   async getAll(params?: GetAllStudentsQueryParams): Promise<GetStudentResponse[]> {
-    // const response = await this.http.get('', { params })
-    return MOCK_STUDENTS
+    const { data } = await this.http.get<GetStudentResponse[]>('', { params })
+
+    return data
   }
 
   async create(student: CreateStudentRequest): Promise<void> {
-    const response = await this.http.post('', student)
-    return response.data
+    await this.http.post('', student)
+
+    this.onSuccess('Student created successfully')
   }
 
   async update(id: number, student: UpdateStudentRequest): Promise<void> {
-    const response = await this.http.put(`/${id}`, student)
-    return response.data
+    await this.http.put(`/${id}`, student)
+
+    this.onSuccess('Student updated successfully')
   }
 
   async delete(id: number): Promise<void> {
-    const response = await this.http.delete(`/${id}`)
-    return response.data
+    await this.http.delete(`/${id}`)
+
+    this.onSuccess('Student deleted successfully')
   }
 }
