@@ -5,6 +5,10 @@ defineProps<{
   buttonLabel: string
   buttonClass: string
 }>()
+
+defineEmits<{
+  (event: 'confirm'): void
+}>()
 </script>
 
 <template>
@@ -18,7 +22,7 @@ defineProps<{
       <div class="modal-action">
         <form method="dialog">
           <button class="btn btn-error btn-outline mr-4">Cancel</button>
-          <button class="btn btn-success">Confirm</button>
+          <button class="btn btn-success" @click="$emit('confirm')">Confirm</button>
         </form>
       </div>
     </div>
