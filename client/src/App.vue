@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import StudentCard from './components/StudentCard.vue'
 import MyHeader from './components/MyHeader.vue'
-import type { Student } from './common/types/Student'
+import type { Student, StudentFormValues } from './common/types/Student'
 import { onMounted, ref } from 'vue'
 import { StudentService } from './services/api/student/StudentService'
+import toast from './plugins/vueToast'
 
 const studentService = new StudentService()
 
 const studentList = ref<Student[]>([])
 
-const addForm = ref<Partial<Student>>({
+const addForm = ref<StudentFormValues>({
   name: '',
   cpf: '',
   email: ''
 })
 
-const editForm = ref<Partial<Student>>({
+const editForm = ref<StudentFormValues>({
   name: '',
   cpf: '',
   email: ''
@@ -34,20 +35,31 @@ onMounted(async () => {
 })
 
 const handleSearch = async () => {
-  // const studentsData = await studentService.getAll(filterParams.value)
-  // students.value = studentsData
+  const studentsData = await studentService.getAll(filterParams.value)
+
+  if (studentsData.length === 0) {
+    toast.info('No students found')
+  }
+
+  studentList.value = studentsData
 }
 
-const handleAdd = async (student: Partial<Student>) => {
-  console.log(student)
+const handleAdd = async (student: StudentFormValues) => {
+  await studentService.create(student)
+
+  await handleSearch()
 }
 
-const handleEdit = async (id: number, student: Partial<Student>) => {
-  console.log(id, student)
+const handleEdit = async (id: number, student: StudentFormValues) => {
+  await studentService.update(id, student)
+
+  await handleSearch()
 }
 
 const handleDelete = async (id: number) => {
-  console.log(id)
+  await studentService.delete(id)
+
+  await handleSearch()
 }
 </script>
 
