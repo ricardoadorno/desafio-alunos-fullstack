@@ -10,9 +10,13 @@ class ApiService {
   }
 
   protected handleError(error: any) {
-    toast.error(error.message)
+    const { response } = error
 
-    throw error
+    if (response.data.message) {
+      toast.error(response.data.message)
+    } else {
+      toast.error('Something went wrong')
+    }
   }
 
   protected onSuccess(message: string) {
