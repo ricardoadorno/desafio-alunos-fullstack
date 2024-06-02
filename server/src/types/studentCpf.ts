@@ -1,4 +1,6 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { ValueObject } from 'src/common/entities/valueObject';
+import ValidationErrors from 'src/common/errors/validationErrors';
 
 interface CpfProps {
   value: string;
@@ -6,11 +8,14 @@ interface CpfProps {
 
 export class Cpf extends ValueObject<CpfProps> {
   static create(cpf: string) {
-    // const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    const cpfRegex = /^\d{11}$/;
 
-    // if (!cpfRegex.test(cpf)) {
-    //   throw new Error('Valor invalido');
-    // }
+    if (!cpfRegex.test(cpf)) {
+      throw new HttpException(
+        ValidationErrors.INVALID_CPF,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
 
     return new Cpf({ value: cpf });
   }

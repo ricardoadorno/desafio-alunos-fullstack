@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentRepository } from './student.repository';
@@ -6,13 +6,28 @@ import { StudentFilterParams } from './types/student-filter-params';
 import { Student } from './entities/student.entity';
 import { isEmpty } from 'src/common/checkers/isEmpty';
 import { GetStudentDto } from './dto/get-student.dto';
+import ResourceErrors from 'src/common/errors/resourceErrors';
 
 @Injectable()
 export class StudentService {
   constructor(private readonly studentRepository: StudentRepository) {}
 
   async create(createStudentDto: CreateStudentDto): Promise<void> {
-    await this.studentRepository.create(Student.create(createStudentDto));
+    const student = Student.create(createStudentDto);
+
+    if (await this.studentRepository.cpfAlreadyExists(createStudentDto.cpf))
+      throw new HttpException(
+        ResourceErrors.CPF_ALREADY_EXISTS,
+        HttpStatus.CONFLICT,
+      );
+
+    if (await this.studentRepository.emailAlreadyExists(createStudentDto.email))
+      throw new HttpException(
+        ResourceErrors.EMAIL_ALREADY_EXISTS,
+        HttpStatus.CONFLICT,
+      );
+
+    await this.studentRepository.create(student);
   }
 
   async findAllOrFilter(query?: StudentFilterParams): Promise<GetStudentDto[]> {
@@ -44,6 +59,26 @@ export class StudentService {
       },
       id,
     );
+
+    if (
+      Boolean(updateStudentDto.cpf) &&
+      (await this.studentRepository.cpfAlreadyExists(updateStudentDto.cpf))
+    ) {
+      throw new HttpException(
+        ResourceErrors.CPF_ALREADY_EXISTS,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    if (
+      Boolean(updateStudentDto.email) &&
+      (await this.studentRepository.emailAlreadyExists(updateStudentDto.email))
+    ) {
+      throw new HttpException(
+        ResourceErrors.EMAIL_ALREADY_EXISTS,
+        HttpStatus.CONFLICT,
+      );
+    }
 
     return await this.studentRepository.update(student);
   }
