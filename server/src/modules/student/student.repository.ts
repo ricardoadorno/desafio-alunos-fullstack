@@ -91,4 +91,20 @@ export class StudentRepository {
       where: { id },
     });
   }
+
+  async emailAlreadyExists(email: string): Promise<boolean> {
+    const student = await this.prisma.student.findFirst({
+      where: { email },
+    });
+
+    return Boolean(student);
+  }
+
+  async cpfAlreadyExists(cpf: string): Promise<boolean> {
+    const student = await this.prisma.student.findFirst({
+      where: { cpf },
+    });
+
+    return Boolean(student);
+  }
 }
