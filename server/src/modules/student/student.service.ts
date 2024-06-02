@@ -4,9 +4,9 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentRepository } from './student.repository';
 import { StudentFilterParams } from './types/student-filter-params';
 import { Student } from './entities/student.entity';
-import { isEmpty } from 'src/common/checkers/isEmpty';
+import { isEmpty } from '../../common/checkers/isEmpty';
 import { GetStudentDto } from './dto/get-student.dto';
-import ResourceErrors from 'src/common/errors/resourceErrors';
+import ResourceErrors from '../../common/errors/resourceErrors';
 
 @Injectable()
 export class StudentService {
