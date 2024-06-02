@@ -61,6 +61,7 @@ export class StudentService {
     );
 
     if (
+      !(registeredStudent.cpf === updateStudentDto.cpf) &&
       Boolean(updateStudentDto.cpf) &&
       (await this.studentRepository.cpfAlreadyExists(updateStudentDto.cpf))
     ) {
@@ -71,6 +72,7 @@ export class StudentService {
     }
 
     if (
+      !(registeredStudent.email === updateStudentDto.email) &&
       Boolean(updateStudentDto.email) &&
       (await this.studentRepository.emailAlreadyExists(updateStudentDto.email))
     ) {
