@@ -10,32 +10,52 @@ export class StudentService extends ApiService {
   }
 
   async getById(id: number): Promise<GetStudentResponse> {
-    const { data } = await this.http.get<GetStudentResponse>(`/${id}`)
+    try {
+      const { data } = await this.http.get<GetStudentResponse>(`/${id}`)
 
-    return data
+      return data
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 
   async getAll(params?: GetAllStudentsQueryParams): Promise<GetStudentResponse[]> {
-    const { data } = await this.http.get<GetStudentResponse[]>('', { params })
+    try {
+      const { data } = await this.http.get<GetStudentResponse[]>('', { params })
 
-    return data
+      return data
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 
   async create(student: CreateStudentRequest): Promise<void> {
-    await this.http.post('', student)
+    try {
+      await this.http.post('', student)
 
-    this.onSuccess('Student created successfully')
+      this.onSuccess('Student created successfully')
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 
   async update(id: number, student: UpdateStudentRequest): Promise<void> {
-    await this.http.put(`/${id}`, student)
+    try {
+      await this.http.put(`/${id}`, student)
 
-    this.onSuccess('Student updated successfully')
+      this.onSuccess('Student updated successfully')
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 
   async delete(id: number): Promise<void> {
-    await this.http.delete(`/${id}`)
+    try {
+      await this.http.delete(`/${id}`)
 
-    this.onSuccess('Student deleted successfully')
+      this.onSuccess('Student deleted successfully')
+    } catch (error) {
+      throw this.handleError(error)
+    }
   }
 }
