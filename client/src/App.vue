@@ -9,7 +9,7 @@ import studentStore from './stores/studentStore'
     <MyHeader>
       <template #form-search>
         <form
-          class="flex flex-col gap-4 w-full md:flex-row"
+          class="flex flex-col gap-4 w-full lg:flex-row"
           @submit.prevent="studentStore.handleSearch"
         >
           <input
@@ -36,10 +36,10 @@ import studentStore from './stores/studentStore'
 
       <template #form-add>
         <button
-          class="btn btn-success w-full md:w-auto md:ml-4 mt-4 md:mt-0"
+          class="btn btn-success w-full lg:w-auto md:ml-4 mt-4 md:mt-0"
           onclick="add_modal.showModal()"
         >
-          Add
+          + Add new student
         </button>
         <dialog id="add_modal" class="modal">
           <div class="modal-box">
