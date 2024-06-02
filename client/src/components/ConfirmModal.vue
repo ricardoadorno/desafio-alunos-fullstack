@@ -18,7 +18,6 @@ defineEmits<{
   <dialog :id="'confirm_modal_' + id" class="modal">
     <div class="modal-box">
       <h3 class="font-bold text-lg">{{ header }}</h3>
-      <StudentForm />
       <div class="modal-action">
         <form method="dialog">
           <button class="btn btn-error btn-outline mr-4">Cancel</button>

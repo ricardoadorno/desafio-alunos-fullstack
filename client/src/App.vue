@@ -1,90 +1,34 @@
 <script setup lang="ts">
 import StudentCard from './components/StudentCard.vue'
 import MyHeader from './components/MyHeader.vue'
-import type { Student, StudentFormValues } from './common/types/Student'
-import { onMounted, ref } from 'vue'
-import { StudentService } from './services/api/student/StudentService'
-import toast from './plugins/vueToast'
-
-const studentService = new StudentService()
-
-const studentList = ref<Student[]>([])
-
-const addForm = ref<StudentFormValues>({
-  name: '',
-  cpf: '',
-  email: ''
-})
-
-const editForm = ref<StudentFormValues>({
-  name: '',
-  cpf: '',
-  email: ''
-})
-
-const filterParams = ref({
-  name: '',
-  cpf: '',
-  email: ''
-})
-
-onMounted(async () => {
-  const studentsData = await studentService.getAll()
-
-  studentList.value = studentsData
-})
-
-const handleSearch = async () => {
-  const studentsData = await studentService.getAll(filterParams.value)
-
-  if (studentsData.length === 0) {
-    toast.info('No students found')
-  }
-
-  studentList.value = studentsData
-}
-
-const handleAdd = async (student: StudentFormValues) => {
-  await studentService.create(student)
-
-  await handleSearch()
-}
-
-const handleEdit = async (id: number, student: StudentFormValues) => {
-  await studentService.update(id, student)
-
-  await handleSearch()
-}
-
-const handleDelete = async (id: number) => {
-  await studentService.delete(id)
-
-  await handleSearch()
-}
+import studentStore from './stores/studentStore'
 </script>
 
 <template>
   <main class="container mx-auto p-4">
     <MyHeader>
       <template #form-search>
-        <form class="flex flex-col gap-4 w-full md:flex-row" @submit.prevent="handleSearch">
+        <form
+          class="flex flex-col gap-4 w-full lg:flex-row"
+          @submit.prevent="studentStore.handleSearch"
+        >
           <input
             type="text"
             placeholder="Name"
             class="input input-bordered"
-            v-model="filterParams.name"
+            v-model="studentStore.filterParams.name"
           />
           <input
             type="text"
             placeholder="CPF"
             class="input input-bordered"
-            v-model="filterParams.cpf"
+            v-model="studentStore.filterParams.cpf"
           />
           <input
             type="text"
             placeholder="Email"
             class="input input-bordered"
-            v-model="filterParams.email"
+            v-model="studentStore.filterParams.email"
           />
           <button class="btn btn-primary">Search</button>
         </form>
@@ -92,10 +36,10 @@ const handleDelete = async (id: number) => {
 
       <template #form-add>
         <button
-          class="btn btn-success w-full md:w-auto md:ml-4 mt-4 md:mt-0"
+          class="btn btn-success w-full lg:w-auto md:ml-4 mt-4 md:mt-0"
           onclick="add_modal.showModal()"
         >
-          Add
+          + Add new student
         </button>
         <dialog id="add_modal" class="modal">
           <div class="modal-box">
@@ -106,25 +50,28 @@ const handleDelete = async (id: number) => {
                 type="text"
                 placeholder="Name"
                 class="input input-bordered"
-                v-model="addForm.name"
+                v-model="studentStore.formState.name"
               />
               <input
                 type="text"
                 placeholder="CPF"
+                maxlength="11"
                 class="input input-bordered"
-                v-model="addForm.cpf"
+                v-model="studentStore.formState.cpf"
               />
               <input
-                type="text"
+                type="email"
                 placeholder="Email"
                 class="input input-bordered"
-                v-model="addForm.email"
+                v-model="studentStore.formState.email"
               />
             </div>
             <div class="modal-action">
-              <form method="dialog">
+              <form method="dialog" @submit="studentStore.clearForm">
                 <button class="btn btn-error btn-outline mr-4">Cancel</button>
-                <button class="btn btn-success" @click="() => handleAdd(addForm)">Add</button>
+                <button class="btn btn-success" @click="() => studentStore.handleCreate()">
+                  Add
+                </button>
               </form>
             </div>
           </div>
@@ -134,11 +81,10 @@ const handleDelete = async (id: number) => {
 
     <section class="grid grid-cols-1 mt-10 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StudentCard
-        v-for="student in studentList"
+        v-for="student in studentStore.studentsList"
         :key="student.id"
         v-bind="student"
-        @delete="handleDelete"
-        @edit="() => handleEdit(student.id, editForm)"
+        @delete="(id) => studentStore.handleDelete(id)"
       >
         <template #form-edit>
           <div class="flex flex-col gap-4 w-full my-4">
@@ -146,20 +92,30 @@ const handleDelete = async (id: number) => {
               type="text"
               placeholder="Name"
               class="input input-bordered"
-              v-model="editForm.name"
+              v-model="studentStore.formState.name"
             />
             <input
               type="text"
               placeholder="CPF"
+              maxlength="11"
               class="input input-bordered"
-              v-model="editForm.cpf"
+              v-model="studentStore.formState.cpf"
             />
             <input
-              type="text"
+              type="email"
               placeholder="Email"
               class="input input-bordered"
-              v-model="editForm.email"
+              v-model="studentStore.formState.email"
             />
+          </div>
+
+          <div class="modal-action">
+            <form method="dialog" @submit="studentStore.clearForm">
+              <button class="btn btn-error btn-outline mr-4">Cancel</button>
+              <button class="btn btn-success" @click="() => studentStore.handleUpdate(student.id)">
+                Edit
+              </button>
+            </form>
           </div>
         </template>
       </StudentCard>
