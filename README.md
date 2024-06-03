@@ -8,15 +8,15 @@ Uma Api Restful para gerenciar alunos, com um front-end para visualização e in
 
 1. Manter Alunos: Nome, Email, CPF
 
-2. Manter Alunos: Filtrar alunos por nome, email ou cpf, retornando todos os alunos caso não seja informado nenhum filtro
+1. Manter Alunos: Filtrar alunos por nome, email ou cpf, retornando todos os alunos caso não seja informado nenhum filtro
 
-3. Listar Alunos
+1. Listar Alunos
 
-4. Filtrar Alunos
+1. Filtrar Alunos
 
-5. Deletar Alunos
+1. Deletar Alunos
 
-6. Editar Alunos
+1. Editar Alunos
 
 ## Tecnologias Utilizadas
 
@@ -91,8 +91,6 @@ Uma Api Restful para gerenciar alunos, com um front-end para visualização e in
 
 **Obs: O prefixo `/api` é necessário para o front-end fazer as requisições para o servidor.**
 
--
-
 8. Agora você pode rodar o front-end com o comando:
 
    ```bash
@@ -111,4 +109,4 @@ Abra o terminal na pasta `client` e execute o comando:
 
 **Obs1: O servidor deve estar rodando para os testes e2e funcionarem.**
 
-**Obs2: Os testes e2e são feitos com o cypress, se você estiver rodando o projeto com docker-compose ou em ambiente linux será necessário instalar pacotes adicionais. Veja quais são no link a seguir: https://docs.cypress.io/guides/getting-started/installing-cypress#Linux-Prerequisites **
+**Obs2: Os testes e2e são feitos com o cypress, se você estiver rodando o projeto com docker-compose ou em ambiente linux será necessário instalar pacotes adicionais. Veja quais são no link a seguir:** https://docs.cypress.io/guides/getting-started/installing-cypress#Linux-Prerequisites
