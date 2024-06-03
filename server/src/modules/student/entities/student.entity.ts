@@ -1,7 +1,7 @@
-import { Entity } from 'src/common/entities/entity';
-import { UniqueNumericalId } from 'src/common/entities/uniqueNumericalId';
-import { Cpf } from 'src/types/studentCpf';
-import { Email } from 'src/types/studentEmail';
+import { Entity } from '../../../common/entities/entity';
+import { UniqueNumericalId } from '../../../common/entities/uniqueNumericalId';
+import { Cpf } from '../../../types/studentCpf';
+import { Email } from '../../../types/studentEmail';
 import { GetStudentDto } from '../dto/get-student.dto';
 
 interface StudentProps {

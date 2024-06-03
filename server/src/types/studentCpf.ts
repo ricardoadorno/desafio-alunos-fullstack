@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { ValueObject } from 'src/common/entities/valueObject';
-import ValidationErrors from 'src/common/errors/validationErrors';
+import { ValueObject } from '../common/entities/valueObject';
+import ValidationErrors from '../common/errors/validationErrors';
 
 interface CpfProps {
   value: string;

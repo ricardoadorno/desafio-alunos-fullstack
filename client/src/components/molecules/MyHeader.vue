@@ -1,18 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MyTypography from '@/components/atoms/MyTypography.vue'
+</script>
 
 <template>
   <div class="card w-full bg-neutral shadow-xl">
     <div class="card-body">
-      <h1 class="text-3xl font-bold underline">Students API</h1>
-      <p class="text-md">
+      <MyTypography variant="heading1" data-testid="header-title">Students API</MyTypography>
+      <MyTypography>
         Here you can see all students registered in the system. You can also add new students, edit
         or delete existing ones.
-      </p>
+      </MyTypography>
 
-      <p class="text-sm text-neutral-content italic">
+      <MyTypography variant="caption">
         If you want to search for a specific student, you can use the search inputs, otherwise you
         can see all students by clicking on the search button without filling in any fields.
-      </p>
+      </MyTypography>
 
       <div class="divider m-0"></div>
 

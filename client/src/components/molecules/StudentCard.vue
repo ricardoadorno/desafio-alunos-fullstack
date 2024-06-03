@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import studentStore from '@/stores/studentStore'
-import ConfirmModal from './ConfirmModal.vue'
+import ConfirmModal from '@/components/molecules/ConfirmModal.vue'
+import MyTypography from '@/components/atoms/MyTypography.vue'
+import MyButton from '@/components/atoms/MyButton.vue'
 
 defineProps<{
   id: number
@@ -17,31 +19,32 @@ defineEmits<{
 <template>
   <div class="card w-full bg-neutral shadow-xl">
     <div class="card-body">
-      <h2 class="card-title text-2xl font-bold text-neutral-content truncate">
+      <MyTypography variant="heading3" class="card-title text-neutral-content truncate">
         {{ name }}
-      </h2>
+      </MyTypography>
 
       <div class="divider m-0"></div>
 
-      <p class="text-md text-neutral-content truncate">
+      <MyTypography class="text-neutral-content truncate">
         <b>CPF:</b>
         {{ cpf }}
-      </p>
-      <p class="text-md text-neutral-content truncate">
+      </MyTypography>
+      <MyTypography class="text-neutral-content truncate">
         <b>Email:</b>
         {{ email }}
-      </p>
+      </MyTypography>
       <div class="card-actions justify-end">
-        <button
-          class="btn btn-info"
+        <MyButton
+          data-testid="edit-button"
+          color="info"
           :onclick="`edit_modal_${id}.showModal()`"
           @click="() => studentStore.setupEditForm(id)"
         >
           Edit
-        </button>
+        </MyButton>
         <dialog :id="'edit_modal_' + id" class="modal">
           <div class="modal-box">
-            <h3 class="font-bold text-lg">Edit {{ name }}</h3>
+            <MyTypography variant="heading2">Edit {{ name }}</MyTypography>
             <slot name="form-edit"> </slot>
           </div>
         </dialog>
