@@ -12,10 +12,6 @@ const meta = {
     color: {
       control: 'select',
       options: ['primary', 'secondary', 'error', 'success', 'warning', 'info']
-    },
-    variant: {
-      control: 'select',
-      options: ['solid', 'outlined']
     }
   }
 } satisfies Meta<typeof MyButton>
