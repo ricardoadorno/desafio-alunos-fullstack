@@ -104,7 +104,8 @@ Uma Api Restful para gerenciar alunos, com um front-end para visualização e in
 Abra o terminal na pasta `client` e execute o comando:
 
 ```bash
- npm run test:e2e
+   npm run build
+   npm run test:e2e:dev
 ```
 
 **Obs1: O servidor deve estar rodando para os testes e2e funcionarem.**
