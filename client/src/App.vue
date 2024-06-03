@@ -30,7 +30,7 @@ import MyTypography from '@/components/atoms/MyTypography.vue'
             placeholder="Email"
             v-model="studentStore.filterParams.email"
           />
-          <MyButton data-testid="search-button">Search</MyButton>
+          <MyButton data-testid="search-button" color="info">Search</MyButton>
         </form>
       </template>
 
@@ -67,7 +67,7 @@ import MyTypography from '@/components/atoms/MyTypography.vue'
             </div>
             <div class="modal-action">
               <form method="dialog" @submit="studentStore.clearForm">
-                <MyButton color="error" variant="outline" class="mr-4">Cancel</MyButton>
+                <MyButton color="error" class="mr-4">Cancel</MyButton>
                 <MyButton
                   data-testid="cofirm-add-button"
                   color="success"
@@ -114,7 +114,7 @@ import MyTypography from '@/components/atoms/MyTypography.vue'
 
           <div class="modal-action">
             <form method="dialog" @submit="studentStore.clearForm">
-              <MyButton color="error" variant="outline" class="mr-4">Cancel</MyButton>
+              <MyButton color="error" class="mr-4">Cancel</MyButton>
               <MyButton
                 color="success"
                 @click="() => studentStore.handleUpdate(student.id)"
